@@ -16,19 +16,19 @@ Auth::routes();
 
 /**  Index Page **/
 Route::get('/', function () { return view('index'); });
-Route::get('/about', function () { return view('about'); });
-Route::get('/services', function () { return view('services'); });
-Route::get('/contact', function () { return view('contact'); });
+Route::get('about', function () { return view('front_end.about'); })->name('about');
+Route::get('services', function () { return view('front_end.services'); })->name('services');
+Route::get('contact', function () { return view('front_end.contact'); })->name('contact');
 
 /**  Área Privada  **/
-Route::get('home/', 'HomeController@admin')->name('home');
+Route::get('home', 'HomeController@admin')->name('home');
 
 /**  Cliente  **/
-Route::resource('clientes/','ClienteController');
-Route::get('clientes/create', array('as' => 'create', 'uses' => 'ClienteController@create'));
-Route::delete('clientes/{id}', array('as' => 'destroy', 'uses' => 'ClienteController@destroy'));
-Route::put('clientes/{id}', array('as' => 'update', 'uses' => 'ClienteController@update'));
-Route::post('clientes/changeStatus', array('as' => 'changeStatus', 'uses' => 'ClienteController@changeStatus'));
+Route::resource('clientes','ClienteController');
+Route::post('clientes/changeStatus', 'ClienteController@changeStatus')->name('changeStatus');
+
+/**  Consulta */
+Route::resource('consultas','ConsultaController');
 
 /** Others 
 Route::get('/laravel', function () { return view('otros.welcome'); });

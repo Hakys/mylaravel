@@ -25,7 +25,7 @@ class ClienteController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $clientes = Cliente::all();
+        $clientes = Cliente::orderByDesc('created_at')->get();
         return view('clientes.index', ['clientes' => $clientes]);
     }
 

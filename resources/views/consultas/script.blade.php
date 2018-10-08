@@ -1,36 +1,14 @@
 <!-- Delay table load until everything else is loaded -->
 <script>
     $(window).load(function(){
-        $('#clienteTable').removeAttr('style');
+        $('#consultaTable').removeAttr('style');
     })
 </script>
 
 <script>
-    $(document).ready(function(){
-        $('.activado').iCheck({
-            checkboxClass: 'icheckbox_square-yellow',
-            radioClass: 'iradio_square-yellow',
-            increaseArea: '20%'
-        });
-        $('.activado').on('ifClicked', function(event){
-            id = $(this).data('id');
-            $.ajax({
-                type: 'POST',
-                url: "{{ URL::route('changeStatus') }}",
-                data: {
-                    '_token': $('input[name=_token]').val(),
-                    'id': id
-                },
-                success: function(data) {
-                    //
-                },
-            });
-        });
-        $('.activado').on('ifToggled', function(event) {
-            $(this).closest('tr').toggleClass('warning');
-        });
+    $(document).ready(function(){        
         // Page-Level Demo Scripts - Notifications - Use for reference 
-        $('[data-toggle="tooltip"]').tooltip(); 
+        $('[data-toggle="tooltip"]').tooltip();   
     });
 </script>
 
@@ -38,28 +16,22 @@
 <script type="text/javascript">
     // add a new cliente
     $(document).on('click', '.add-modal', function() {
-        $('.modal-title').text('Añadir Cliente');
+        $('.modal-title').text('Anotar Consulta');
         $('#addModal').modal('show');
     });
     $('.modal-footer').on('click', '.add', function() {
         $.ajax({
             type: 'POST',
-            url: "clientes/",
+            url: "consultas/",
             data: {
-                '_token': $('input[name=_token]').val(),
-                'full_name': $('#full_name_add').val(),
-                'peso': $('#peso_add').val(),
-                'f_nacimiento': $('#f_nacimiento_add').val(),
-                'telefono': $('#telefono_add').val(),
-                'email': $('#email_add').val(),
-                'anotaciones': $('#anotaciones_add').val()
+                '_token': $('input[name=_token]').val(),  
+                'id_cliente': $('#id_cliente_add').val(),               
+                'peso': $('#peso_add').val(),                               
+                'comentario': $('#comentario_add').val(),
             },
             success: function(data) {
-                $('.errorFull_name').addClass('hidden');
+                $('.errorId_cliente').addClass('hidden');
                 $('.errorPeso').addClass('hidden');
-                $('.errorF_nacimiento').addClass('hidden');
-                $('.errorTelefono').addClass('hidden');
-                $('.errorEmail').addClass('hidden');
                 $('.errorAnotaciones').addClass('hidden');
 
                 if ((data.errors)) {
@@ -69,37 +41,24 @@
                     }, 500);
 
                     if (data.errors.full_name) {
-                        $('.errorFull_name').removeClass('hidden');
-                        $('.errorFull_name').text(data.errors.full_name);
+                        $('.errorId_cliente').removeClass('hidden');
+                        $('.errorId_cliente').text(data.errors.id_cliente);
                     }
                     if (data.errors.peso) {
                         $('.errorPeso').removeClass('hidden');
                         $('.errorPeso').text(data.errors.peso);
                     }
-                    if (data.errors.f_nacimiento) {
-                        $('.errorF_nacimiento').removeClass('hidden');
-                        $('.errorF_nacimiento').text(data.errors.f_nacimiento);
-                    }
-                    if (data.errors.telefono) {
-                        $('.errorTelefono').removeClass('hidden');
-                        $('.errorTelefono').text(data.errors.telefono);
-                    }
-                    if (data.errors.email) {
-                        $('.errorEmail').removeClass('hidden');
-                        $('.errorEmail').text(data.errors.email);
-                    }
                     if (data.errors.anotaciones) {
-                        $('.errorAnotaciones').removeClass('hidden');
-                        $('.errorAnotaciones').text(data.errors.anotaciones);
+                        $('.errorComentario').removeClass('hidden');
+                        $('.errorComentario').text(data.errors.comentario);
                     }
                 } else {   
-                    toastr.success('Cliente Añadido con Exito!', 'Success Alert', {timeOut: 5000});                             
+                    toastr.success('Successfully added Client!', 'Success Alert', {timeOut: 5000});                             
                     location.reload();                                
                 }
             },
             error:function(){ 
                 alert("error!!!!");
-            
             }
         });
     });
@@ -206,10 +165,9 @@
                 '_token': $('input[name=_token]').val(),
                 'id': $("#id_delete").val(),
             },
-            success: function(data) { 
-                location.reload();                              
+            success: function(data) {                               
                 toastr.success('Successfully deleted Post!', 'Success Alert', {timeOut: 5000});
-                //$('.item' + data['id']).remove();
+                $('.item' + data['id']).remove();
             }
         });
     });

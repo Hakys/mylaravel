@@ -7,14 +7,18 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form">   
-                    @csrf                 
+                <form class="form-horizontal" role="form">
+                    @csrf
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="full_name">Nombre Completo:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="full_name_add" autofocus>
-                            <small>Min: 2, Max: 190, Solo Texto</small>
-                            <p class="errorFull_name text-center alert alert-danger hidden"></p>
+                        <label class="control-label col-sm-2" for="full_name">Cliente:</label>
+                        <div class="col-sm-10">                            
+                            <select class="form-control" id="id_cliente_add" autofocus>
+                                @foreach($clientes as $cliente)    
+                                    <option value="{{$cliente->id}}">{{$cliente->full_name}}</option>
+                                @endforeach                                
+                            </select>
+                            <small>* Campo Obligatorio</small>
+                            <p class="errorId_cliente text-center alert alert-danger hidden"></p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -26,35 +30,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="f_nacimiento">Fecha de Nacimiento:</label>
+                        <label class="control-label col-sm-2" for="anotaciones">Comentario:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="f_nacimiento_add" value="1995/12/12">
-                            <small>Formato: 1995/12/12</small>
-                            <p class="errorF_nacimiento text-center alert alert-danger hidden"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="telefono">Teléfono:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="telefono_add">
-                            <small>Formato: 959123456</small>
-                            <p class="errorTelefono text-center alert alert-danger hidden"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">Email:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="email_add">
-                            <small>Formato: nombre@servidor.com</small>
-                            <p class="errorEmail text-center alert alert-danger hidden"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="anotaciones">Anotaciones:</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" id="anotaciones_add" cols="40" rows="10"></textarea>
+                            <textarea class="form-control" id="comentario_add" cols="40" rows="10"></textarea>
                             <small>Min: 2, Max: 128, only text</small>
-                            <p class="errorAnotaciones text-center alert alert-danger hidden"></p>
+                            <p class="errorComentario text-center alert alert-danger hidden"></p>
                         </div>
                     </div>
                 </form>

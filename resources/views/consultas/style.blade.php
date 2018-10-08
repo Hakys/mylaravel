@@ -40,7 +40,7 @@
     .page-header {
         margin: 20px 0 20px;
     }
-    th {
-        text-align: center;
-    }
+    th{
+            text-align: center;
+        }
 </style>
