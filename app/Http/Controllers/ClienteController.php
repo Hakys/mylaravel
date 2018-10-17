@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 use Validator;
 use Response;
 use App\Cliente;
+use App\Consulta;
 use View;
 
 class ClienteController extends Controller{
 
     protected $rules = [        
         'full_name' => 'required|min:2|max:190|string',
-        'peso' => 'required|numeric',
+        'peso_inicial' => 'required|numeric',
+        'peso_saludable' => 'required|numeric',
+        'altura' => 'required|numeric',
         'f_nacimiento' => 'required|date',
         'telefono' => 'required|numeric',
         'email' => 'required|email',
@@ -51,12 +54,21 @@ class ClienteController extends Controller{
         } else {
             $cliente = new Cliente();
             $cliente->full_name = $request->full_name;
-            $cliente->peso = $request->peso;
+            $cliente->peso_inicial = $request->peso_inicial;
+            $cliente->peso_saludable = $request->peso_saludable;
+            $cliente->altura = $request->altura;
             $cliente->f_nacimiento = $request->f_nacimiento;
             $cliente->telefono = $request->telefono;
             $cliente->email = $request->email;
             $cliente->anotaciones = $request->anotaciones;
             $cliente->save();
+
+            $consulta0 = Consulta::where('asistio',0)->where('fecha','>',TODAY())->orderby('fecha')->first();
+            $consulta0->id_cliente = $cliente->id;
+            $consulta0->peso = $cliente->peso_inicial;
+            $consulta0->comentario = 'consulta inicial';
+            $consulta0->asistio = 1;
+            $consulta0->save();
             return response()->json($cliente);
         }
     }
@@ -69,7 +81,9 @@ class ClienteController extends Controller{
      */
     public function show($id) {
         $cliente = Cliente::findOrFail($id);
-        return view('clientes.show', ['cliente' => $cliente]);
+        $consultas = Consulta::where('id_cliente', $id)->orderByDesc('fecha')->get();
+        return view('clientes.show', 
+            ['cliente' => $cliente,'consultas' => $consultas]);
     }
 
     /**
@@ -96,7 +110,9 @@ class ClienteController extends Controller{
         } else {
             $cliente = Cliente::findOrFail($id);
             $cliente->full_name = $request->full_name;
-            $cliente->peso = $request->peso;
+            $cliente->peso_inicial = $request->peso_inicial;
+            $cliente->peso_saludable = $request->peso_saludable;
+            $cliente->altura = $request->altura;
             $cliente->f_nacimiento = $request->f_nacimiento;
             $cliente->telefono = $request->telefono;
             $cliente->email = $request->email;

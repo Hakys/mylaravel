@@ -15,11 +15,11 @@
 <!-- AJAX CRUD operations -->
 <script type="text/javascript">
     // add a new cliente
-    $(document).on('click', '.add-modal', function() {
+    $(document).on('click', '.add-ConsultaModal', function() {
         $('.modal-title').text('Anotar Consulta');
-        $('#addModal').modal('show');
+        $('#addConsultaModal').modal('show');
     });
-    $('.modal-footer').on('click', '.add', function() {
+    $('.modal-footer').on('click', '.addConsulta', function() {
         $.ajax({
             type: 'POST',
             url: "consultas/",
@@ -36,7 +36,7 @@
 
                 if ((data.errors)) {
                     setTimeout(function () {
-                        $('#addModal').modal('show');
+                        $('#addConsultaModal').modal('show');
                         toastr.error('Validation error!', 'Error Alert', {timeOut: 5000});
                     }, 500);
 
@@ -72,7 +72,7 @@
         $('#telefono_show').val($(this).data('telefono'));
         $('#email_show').val($(this).data('email'));
         $('#anotaciones_show').val($(this).data('anotaciones'));
-        $('#showModal').modal('show');
+        $('#showConsultaModal').modal('show');
     });
 
 
@@ -87,7 +87,7 @@
         $('#telefono_edit').val($(this).data('telefono'));
         $('#email_edit').val($(this).data('email'));
         $('#anotaciones_edit').val($(this).data('anotaciones'));
-        $('#editModal').modal('show');
+        $('#editConsultaModal').modal('show');
     });
     $('.modal-footer').on('click', '.edit', function() {
         $.ajax({
@@ -113,7 +113,7 @@
 
                 if ((data.errors)) {
                     setTimeout(function () {
-                        $('#editModal').modal('show');
+                        $('#editConsultaModal').modal('show');
                         toastr.error('Validation error!', 'Error Alert', {timeOut: 5000});
                     }, 500);
 

@@ -16,10 +16,13 @@ class CreateConsultasTable extends Migration
         Schema::create('consultas', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->float('peso',6,3);
+            $table->timestamp('fecha')->unique()->default(NOW());
+            $table->float('peso',6,3)->default(0);
+            $table->float('variacion',6,3)->default(0);
             $table->string('comentario')->nullable();
-            $table->unsignedInteger('id_cliente')->unsigned();
-            $table->foreign('id_cliente')->references('id')->on('clientes');
+            $table->boolean('asistio')->default(false);
+            $table->unsignedInteger('id_cliente')->unsigned()->nullable();
+            $table->foreign('id_cliente')->references('id')->on('clientes');            
         });
     }
 

@@ -17,12 +17,14 @@ class CreateClientesTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('full_name');
-            $table->date('f_nacimiento')->default('1900-1-1');
+            $table->timestamp('f_nacimiento')->nullable();
             $table->string('email')->unique();
             $table->string('telefono',12)->unique();
             $table->boolean('activo')->default(false);
             $table->longText('anotaciones')->nullable();
-            $table->float('peso',6,3);
+            $table->float('peso_inicial',6,3)->default(0);
+            $table->float('peso_saludable',6,3)->default(0);
+            $table->float('altura',6,3)->default(0);
         });
     }
 

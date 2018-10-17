@@ -1,5 +1,5 @@
 <!-- Modal form to add a cliente -->
-<div id="addModal" class="modal fade" role="dialog">
+<div id="addConsultaModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -39,7 +39,7 @@
                     </div>
                 </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success add" data-dismiss="modal">
+                    <button type="button" class="btn btn-success addConsulta" data-dismiss="modal">
                         <span id="" class='glyphicon glyphicon-save'></span> Guardar
                     </button>
                     <button type="button" class="btn btn-warning" data-dismiss="modal">
@@ -52,7 +52,7 @@
 </div>
 
 <!-- Modal form to show a post -->
-<div id="showModal" class="modal fade" role="dialog">
+<div id="showConsultaModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -109,7 +109,7 @@
 </div>
 
 <!-- Modal form to edit a form -->
-<div id="editModal" class="modal fade" role="dialog">
+<div id="editConsultaModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

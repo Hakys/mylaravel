@@ -10,11 +10,14 @@ use App\Consulta;
 use App\Cliente;
 use View;
 
-class ConsultaController extends Controller
-{
+class ConsultaController extends Controller{
     protected $rules = [        
-        'id_cliente' => 'required|numeric',
-        'peso' => 'required|numeric',
+        'peso' => 'numeric',
+        'variacion' => 'numeric',
+        'id_cliente' => 'numeric',
+        'asistio' => 'boolean',
+        'comentario' => 'string',
+        'fecha' => 'requered|date',
     ];
     
     /**
@@ -22,11 +25,29 @@ class ConsultaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $consultas = Consulta::orderByDesc('created_at')->get();
-        $clientes = Cliente::orderBy('full_name')->get();
+    public function index(){
+        //$consultas = Consulta::orderByDesc('fecha')->get();
+        $consultas =Consulta::where('asistio',1)->orderbyDesc('fecha')->take(36)->get();
+        //$clientes = Cliente::orderBy('full_name')->get();
+        $clientes = Cliente::all();
         return view('consultas.index', ['consultas' => $consultas,'clientes' => $clientes]);
+    }
+
+    public function calendario(){
+        $consultas = Consulta::where('asistio',1)->orderby('fecha')->get();
+        $huecos = Consulta::where('asistio',0)->orderby('fecha')->get();
+        $clientes = Cliente::all();
+        return view('consultas.calendar', ['consultas' => $consultas,'clientes' => $clientes, 'huecos' => $huecos]);
+    }
+    
+    public function diario($ano,$mes,$dia){
+        $consultas = Consulta::where('fecha', '>=', date('Y-m-d',mktime(0,0,0,$mes,$dia,$ano)))
+                            ->where('fecha', '<', date('Y-m-d',mktime(0,0,0,$mes,$dia+1,$ano)))
+                            ->orderBy('fecha')->get();
+        $clientes = Cliente::all();
+        return view('consultas.diario', [
+            'ano' => $ano, 'mes' => $mes, 'dia' => $dia,
+            'consultas' => $consultas,'clientes' => $clientes]);
     }
 
     /**
@@ -113,5 +134,19 @@ class ConsultaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Cambia el campo asistio
+     */
+    public function changeAsistencia() 
+    {
+        $id = Input::get('id');
+
+        $consulta =Consulta::findOrFail($id);
+        $consulta->asistio = !$consulta->asistio;
+        $consulta->save();
+
+        return response()->json($consulta);
     }
 }

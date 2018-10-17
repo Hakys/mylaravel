@@ -15,6 +15,7 @@
     <link href="{!! asset('theme_admin/dist/css/sb-admin-2.css') !!}" rel="stylesheet">
     <!-- Morris Charts CSS -->
     <link href="{!! asset('theme_admin/vendor/morrisjs/morris.css') !!}" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <!-- Custom Fonts -->
     <link href="{!! asset('theme_admin/vendor/font-awesome/css/font-awesome.min.css') !!}" rel="stylesheet" type="text/css">
 
@@ -57,7 +58,11 @@
     <!-- Morris Charts JavaScript -->
     <script src="{!! asset('theme_admin/vendor/raphael/raphael.min.js') !!}"></script>
     <script src="{!! asset('theme_admin/vendor/morrisjs/morris.min.js') !!}"></script>
+    <!--
+    <script src="{!! asset('theme_admin/data/flot-data.js') !!}"></script>
     <script src="{!! asset('theme_admin/data/morris-data.js') !!}"></script>
+    -->
+    
     <!-- Custom Theme JavaScript -->
     <script src="{!! asset('theme_admin/dist/js/sb-admin-2.js') !!}"></script>
 

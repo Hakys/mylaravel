@@ -29,6 +29,11 @@ Route::post('clientes/changeStatus', 'ClienteController@changeStatus')->name('ch
 
 /**  Consulta */
 Route::resource('consultas','ConsultaController');
+Route::post('clientes/changeAsistencia', 'ClienteController@changeAsistencia')->name('changeAsistencia');
+Route::get('calendario', 'ConsultaController@calendario')->name('calendario');
+Route::get('diario/{ano}/{mes}/{dia}', 'ConsultaController@diario')
+    ->where(['ano'=>'[0-9]+', 'mes'=>'[0-9]+', 'dia'=>'[0-9]+'])    
+    ->name('diario');
 
 /** Others 
 Route::get('/laravel', function () { return view('otros.welcome'); });

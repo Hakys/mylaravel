@@ -8,17 +8,13 @@ class Cliente extends Model {
     public $timestamps = true;
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-    protected $fillable = ['full_name', 'peso', 'f_nacimiento', 'activo', 'email', 'telefono', 'anotaciones', ];
+    protected $fillable = ['full_name', 'peso_inicial', 'peso_saludable', 'altura', 'f_nacimiento', 'activo', 'email', 'telefono', 'anotaciones', ];
     protected $hidden = ['id', 'created_at', 'updated_at'];
 
-    // Relación
+    // One to Many
     public function consultas(){
         return $this->hasMany('App\Consulta');
     }
-
-    public function consultasUnion(){
-		return $this->hasMany('Consulta','id_cliente');
-	}
 
     public static function getExcerpt($str, $startPos = 0, $maxLength = 50) {
         if(strlen($str) > $maxLength) {

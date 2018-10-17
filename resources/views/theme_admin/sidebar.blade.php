@@ -12,23 +12,10 @@
                 </div>
                 <!-- /input-group -->
             </li>
-            <li><a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Panel de Control</a></li>
-            <li>
-                <a href="#"><i class="fa fa-users fa-fw"></i> Clientes<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li><a href="/clientes"><i class="fa fa-users fa-fw"></i> Todos los Clientes</a></li>
-                    <li><a href="/clientes"><i class="fa fa-plus fa-fw"></i> Añadir Clientes</a></li>
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-users fa-fw"></i> Consultas<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li><a href="/consultas"><i class="fa fa-users fa-fw"></i> Historico Consultas</a></li>
-                    <li><a href="/consultas"><i class="fa fa-plus fa-fw"></i> Pasar Consulta</a></li>
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
+            <li><a href="/home"><i class="fa fa-dashboard fa-fw"></i> Panel de Control</a></li>
+            <li><a href="/clientes"><i class="fa fa-users fa-fw"></i> Clientes</a></li>
+            <li><a href="/consultas"><i class="fa fa-users fa-fw"></i> Historico Consultas</a></li>
+            <li><a href="/calendario"><i class="fa fa-calendar fa-fw"></i> Calendario</a></li>
             <li>
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">

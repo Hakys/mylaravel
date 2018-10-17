@@ -1,7 +1,7 @@
 <!-- Delay table load until everything else is loaded -->
 <script>
     $(window).load(function(){
-        $('#clienteTable').removeAttr('style');
+        $('#consultaTable').removeAttr('style');
     })
 </script>
 
@@ -48,7 +48,9 @@
             data: {
                 '_token': $('input[name=_token]').val(),
                 'full_name': $('#full_name_add').val(),
-                'peso': $('#peso_add').val(),
+                'peso_inicial': $('#peso_inicial_add').val(),
+                'peso_saludable': $('#peso_saludable_add').val(),
+                'altura': $('#altura_add').val(),
                 'f_nacimiento': $('#f_nacimiento_add').val(),
                 'telefono': $('#telefono_add').val(),
                 'email': $('#email_add').val(),
@@ -56,7 +58,9 @@
             },
             success: function(data) {
                 $('.errorFull_name').addClass('hidden');
-                $('.errorPeso').addClass('hidden');
+                $('.errorPeso_inicial').addClass('hidden');
+                $('.errorPeso_saludable').addClass('hidden');
+                $('.errorAltura').addClass('hidden');
                 $('.errorF_nacimiento').addClass('hidden');
                 $('.errorTelefono').addClass('hidden');
                 $('.errorEmail').addClass('hidden');
@@ -72,9 +76,17 @@
                         $('.errorFull_name').removeClass('hidden');
                         $('.errorFull_name').text(data.errors.full_name);
                     }
-                    if (data.errors.peso) {
-                        $('.errorPeso').removeClass('hidden');
-                        $('.errorPeso').text(data.errors.peso);
+                    if (data.errors.peso_inicial) {
+                        $('.errorPeso_inicial').removeClass('hidden');
+                        $('.errorPeso_inicial').text(data.errors.peso_inicial);
+                    }
+                    if (data.errors.peso_saludable) {
+                        $('.errorPeso_saludable').removeClass('hidden');
+                        $('.errorPeso_saludable').text(data.errors.peso_saludable);
+                    }
+                    if (data.errors.altura) {
+                        $('.errorAltura').removeClass('hidden');
+                        $('.errorAltura').text(data.errors.altura);
                     }
                     if (data.errors.f_nacimiento) {
                         $('.errorF_nacimiento').removeClass('hidden');
@@ -98,7 +110,7 @@
                 }
             },
             error:function(){ 
-                alert("error!!!!");
+                alert("ERROR !!! Valores duplicados en el sistema, el teléfono y el email son únicos.");
             
             }
         });
@@ -130,10 +142,11 @@
         $('#anotaciones_edit').val($(this).data('anotaciones'));
         $('#editModal').modal('show');
     });
+    id = $("#id_edit").val();
     $('.modal-footer').on('click', '.edit', function() {
         $.ajax({
             type: 'PUT',
-            url: 'clientes/' + id,
+            url: '/clientes/' + id,
             data: {
                 '_token': $('input[name=_token]').val(),
                 'id': $("#id_edit").val(),

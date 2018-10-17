@@ -22,32 +22,30 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <ul>
-            <li><i class="fa fa-users fa-fw"></i> Histórico de Consultas  <span class="badge badge-primary badge-pill">14</span></li>
-            <a href="#" class="add-modal"><li><i class="fa fa-plus fa-fw"></i>Pasar Consulta</li></a>
+            <li><i class="fa fa-users fa-fw"></i> Histórico de Consultas  <span class="badge badge-primary badge-pill">{{ $consultas->count() }}</span></li>
+            <a href="#" class="add-ConsultaModal"><li><i class="fa fa-plus fa-fw"></i>Añadir Consulta</li></a>
         </ul>
     </div>
     <div class="panel-body">
             <table id="consultaTable" class="table table-striped table-bordered table-hover" >
                 <thead>
-                    <tr>
-                        <th class="text-middle"></th>
+                    <tr class="text-middle">                        
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Cliente</th>                    
-                        <th>Peso</th>
-                        <th>Actualido</th>
+                        <th>Peso</th>                        
                         <th>Acciones</th>
                     </tr>                   
                 </thead>
                 <tbody>
                     @foreach($consultas as $consulta)
-                        <tr class="item{{$consulta->id}}">
-                            <td>{{ $consulta->id }}</td>
-                            <td>{{ $consulta->created_at }}</td>
-                            <td>{{ $consulta->created_at }}</td>
-                            <td>{{ $consulta->id_cliente }}</td>
-                            <td>{{ $consulta->peso }}</td>                        
-                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $consulta->updated_at)->diffForHumans() }}</td>
+                        <tr class="item{{$consulta->id}}">                            
+                            <td class="text-center"><a href="diario/{{ \Carbon\Carbon::createFromTimeString($consulta->fecha)->format('Y/m/d') }}">
+                                {{ \Carbon\Carbon::createFromTimeString($consulta->fecha)->format('d/m/Y') }}</a></td>
+                            <td class="text-center">{{ \Carbon\Carbon::createFromTimeString($consulta->fecha)->format('H:i') }}</td>
+                            <td><a href="{{ route('clientes.show', $consulta->cliente) }}">{{ $consulta->cliente->full_name }}</a></td>
+                            <td class="text-right">{{ $consulta->peso }} Kg.</td>                        
+                            <!--<th>Actualido</th><td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $consulta->updated_at)->diffForHumans() }}</td>-->
                             <td>
                                 <button type="button" class="btn btn-default" data-toggle="tooltip"
                                     data-placement="left" title="{{$consulta->comentario}}"> 
