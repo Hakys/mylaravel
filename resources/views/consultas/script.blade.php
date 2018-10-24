@@ -11,9 +11,111 @@
         $('[data-toggle="tooltip"]').tooltip();   
     });
 </script>
-
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker12').datetimepicker({
+            inline: true,
+            sideBySide: true
+        });
+    });
+</script>    
+<script type="text/javascript">
+    $(function () {
+        $('.fecha_add_div').datetimepicker({
+            format: "dd MM yyyy - hh:ii",
+        });
+        $('#from').datetimepicker({
+            language: 'es',
+            minDate: new Date()
+        });
+        $('#to').datetimepicker({
+            language: 'es',
+            minDate: new Date()
+        });
+    });
+</script>  
 <!-- AJAX CRUD operations -->
 <script type="text/javascript">
+    // Add Evento Reserva
+    $(document).on('click', '.add_evento-modal', function() {
+        start = $(this).data('start');
+        fecha = $(this).data('fecha');
+        id_cliente = $(this).data('id_cliente_evento');
+        tipo_evento = $(this).data('tipo_evento');
+        comentario = $(this).date('comentario_evento');
+
+        $('.modal-title').text('Cita Previa para el Día / Hora: '+fecha);
+        $('#fecha_evento').val(fecha);
+        if(id_cliente)
+            $('#id_cliente_evento option[value=id_cliente]').attr('selected','selected');
+        if(tipo_evento)
+            $('#tipo_evento option[value=tipo_evento]').attr('selected','selected');
+        $('#comentario_evento').val(comentario_evento);
+        
+        $('#add_evento').modal('show');
+    });
+    $('.modal-footer').on('click', '.edit', function() {
+        $.ajax({
+            type: 'PUT',
+            url: 'clientes/' + id,
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'id': $("#id_edit").val(),
+                'full_name': $('#full_name_edit').val(),
+                'peso': $('#peso_edit').val(),
+                'f_nacimiento': $('#f_nacimiento_edit').val(),
+                'telefono': $('#telefono_edit').val(),
+                'email': $('#email_edit').val(),
+                'anotaciones': $('#anotaciones_edit').val()
+            },
+            success: function(data) {
+                $('.errorFull_name').addClass('hidden');
+                $('.errorPeso').addClass('hidden');
+                $('.errorF_nacimiento').addClass('hidden');
+                $('.errorTelefono').addClass('hidden');
+                $('.errorEmail').addClass('hidden');
+                $('.errorAnotaciones').addClass('hidden');
+
+                if ((data.errors)) {
+                    setTimeout(function () {
+                        $('#editConsultaModal').modal('show');
+                        toastr.error('Validation error!', 'Error Alert', {timeOut: 5000});
+                    }, 500);
+
+                    if (data.errors.full_name) {
+                        $('.errorFull_name').removeClass('hidden');
+                        $('.errorFull_name').text(data.errors.full_name);
+                    }
+                    if (data.errors.peso) {
+                        $('.errorPeso').removeClass('hidden');
+                        $('.errorPeso').text(data.errors.peso);
+                    }
+                    if (data.errors.f_nacimiento) {
+                        $('.errorF_nacimiento').removeClass('hidden');
+                        $('.errorF_nacimiento').text(data.errors.f_nacimiento);
+                    }
+                    if (data.errors.telefono) {
+                        $('.errorTelefono').removeClass('hidden');
+                        $('.errorTelefono').text(data.errors.telefono);
+                    }
+                    if (data.errors.email) {
+                        $('.errorEmail').removeClass('hidden');
+                        $('.errorEmail').text(data.errors.email);
+                    }
+                    if (data.errors.anotaciones) {
+                        $('.errorAnotaciones').removeClass('hidden');
+                        $('.errorAnotaciones').text(data.errors.anotaciones);
+                    }
+                } else {
+                    location.reload();
+                    toastr.success('Successfully updated Post!', 'Success Alert', {timeOut: 5000});
+                }
+            }
+        });
+    });
+
+
+
     // add a new cliente
     $(document).on('click', '.add-ConsultaModal', function() {
         $('.modal-title').text('Anotar Consulta');

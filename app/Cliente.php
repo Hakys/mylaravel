@@ -8,8 +8,8 @@ class Cliente extends Model {
     public $timestamps = true;
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-    protected $fillable = ['full_name', 'peso_inicial', 'peso_saludable', 'altura', 'f_nacimiento', 'activo', 'email', 'telefono', 'anotaciones', ];
-    protected $hidden = ['id', 'created_at', 'updated_at'];
+    protected $fillable = ['created_at', 'full_name', 'peso_inicial', 'peso_saludable', 'altura', 'f_nacimiento', 'activo', 'email', 'telefono', 'anotaciones'];
+    protected $hidden = ['id',  'updated_at'];
 
     // One to Many
     public function consultas(){

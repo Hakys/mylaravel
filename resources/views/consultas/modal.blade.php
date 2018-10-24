@@ -37,12 +37,39 @@
                             <p class="errorComentario text-center alert alert-danger hidden"></p>
                         </div>
                     </div>
+                    <hr>
+                    <label for="from">Inicio</label>
+                    <div class='input-group date' id='from'>
+                        <input type='text' id="from" name="from" class="form-control" readonly />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </div>
+                    <br>
+                    <label for="to">Final</label>
+                    <div class='input-group date' id='to'>
+                        <input type='text' name="to" id="to" class="form-control" readonly />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </div>
+                    <br>            
+                    <label for="tipo">Tipo de evento</label>
+                    <select class="form-control" name="class" id="tipo">
+                        <option value="event-info">Informacion</option>
+                        <option value="event-success">Exito</option>
+                        <option value="event-important">Importantante</option>
+                        <option value="event-warning">Advertencia</option>
+                        <option value="event-special">Especial</option>
+                    </select>
+                    <br>
+                    <label for="title">Título</label>
+                    <input type="text" required autocomplete="off" name="title" class="form-control" id="title" placeholder="Introduce un título">
+                    <br>
+                    <label for="body">Evento</label>
+                    <textarea id="body" name="event" required class="form-control" rows="3"></textarea>    
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success addConsulta" data-dismiss="modal">
                         <span id="" class='glyphicon glyphicon-save'></span> Guardar
                     </button>
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
                         <span class='glyphicon glyphicon-remove'></span> Cerrar
                     </button>
                 </div>

@@ -94,6 +94,20 @@ class ClientesTableSeed extends Seeder
             'altura' => 1.75,
             'created_at' => '2018-01-01',
             'updated_at' => NOW(),
+        ]); 
+        \DB::table('clientes')->insert([
+            'id' => 7,
+            'full_name' => 'señor cansino',
+            'f_nacimiento' => '2005-01-31',
+            'email' => 'cansino@diablaroja.es',
+            'telefono' => '653111444',
+            'activo' => 1,
+            'anotaciones' => 'comentario del cliente antonio  exto',
+            'peso_inicial' => 123,
+            'peso_saludable' => 70,
+            'altura' => 1.75,
+            'created_at' => '2018-01-01',
+            'updated_at' => NOW(),
         ]);  
     }
 }
