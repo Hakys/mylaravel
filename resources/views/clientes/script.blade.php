@@ -1,7 +1,7 @@
 <!-- Delay table load until everything else is loaded -->
 <script>
     $(window).load(function(){
-        $('#consultaTable').removeAttr('style');
+        $('#clienteTable').removeAttr('style');
     })
 </script>
 

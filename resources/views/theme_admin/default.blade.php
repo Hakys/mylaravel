@@ -49,19 +49,17 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="{!! asset('theme_admin/vendor/jquery/jquery.min.js') !!}"></script>
+    <!-- jQuery --> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{!! asset('theme_admin/vendor/jquery/2.2.4/jquery.min.js') !!}"></script>
     <!-- Bootstrap Core JavaScript -->
+    <script src="{!! asset('theme_admin/vendor/popper/popper.min.js') !!}"></script>
     <script src="{!! asset('theme_admin/vendor/bootstrap/js/bootstrap.min.js') !!}"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="{!! asset('theme_admin/vendor/metisMenu/metisMenu.min.js') !!}"></script>
     <!-- Morris Charts JavaScript -->
     <script src="{!! asset('theme_admin/vendor/raphael/raphael.min.js') !!}"></script>
     <script src="{!! asset('theme_admin/vendor/morrisjs/morris.min.js') !!}"></script>
-    <!--
-    <script src="{!! asset('theme_admin/data/flot-data.js') !!}"></script>
-    <script src="{!! asset('theme_admin/data/morris-data.js') !!}"></script>
-    -->
     
     <!-- Custom Theme JavaScript -->
     <script src="{!! asset('theme_admin/dist/js/sb-admin-2.js') !!}"></script>
@@ -71,7 +69,9 @@
     <!-- icheck checkboxes -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
 
-   @yield('script')
+   
+   
+    @yield('script')
 
 </body>
 </html>

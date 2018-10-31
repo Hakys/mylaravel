@@ -27,7 +27,7 @@
         </ul>
     </div>
     <div class="panel-body">
-            <table class="table table-striped table-bordered table-hover" id="clienteTable">
+            <table class="table table-striped table-bordered table-hover" id="clienteTable" style="">
                 <thead>
                     <tr>
                         <th class="text-middle"></th>
