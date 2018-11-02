@@ -28,10 +28,10 @@ class ConsultaController extends Controller{
     protected $rules = [        
         'peso' => 'numeric',
         'variacion' => 'numeric',
-        'id_cliente' => 'numeric',
+        'cliente_id' => 'numeric',
         'asistio' => 'boolean',
         'comentario' => 'string',
-        'fecha' => 'requered|date',
+        'fecha' => 'date',
     ];
     
     /**
@@ -129,7 +129,7 @@ class ConsultaController extends Controller{
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $consulta = new Consulta();
-            $consulta->id_cliente = $request->id_cliente;
+            $consulta->cliente_id = $request->cliente_id;
             $consulta->peso = $request->peso;
             $consulta->comentario = $request->comentario;
             $consulta->save();
@@ -199,7 +199,7 @@ class ConsultaController extends Controller{
         // insertamos el evento
         // $query="INSERT INTO eventos VALUES(null,'$titulo','$body','','$clase','$inicio','$final','$inicio_normal','$final_normal')";
         $consulta = new Consulta();
-        $consulta->id_cliente = $request->id_cliente;
+        $consulta->cliente_id = $request->cliente_id;
         $consulta->peso = $request->peso;
         $consulta->comentario = $request->comentario;
         $consulta->save();
@@ -235,7 +235,7 @@ class ConsultaController extends Controller{
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
             $consulta = Consulta::findOrFail($id);
-            $consulta->id_cliente = $request->id_cliente;
+            $consulta->cliente_id = $request->cliente_id;
             $consulta->peso = $request->peso;
             $consulta->comentario = $request->comentario;
             $consulta->save();

@@ -88,6 +88,7 @@
 </div><!-- /.panel panel-default -->
 
 @include('consultas.modal')
+@include('consultas.modal-add')
 
 @endsection
 

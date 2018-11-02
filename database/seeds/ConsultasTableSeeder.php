@@ -16,10 +16,10 @@ class ConsultasTableSeeder extends Seeder
     {
         $ano=2018;
         $meses=range(1,12);
-        //$meses=[1];
+        $meses=[1,3,5,7,9];
         $dias=range(1,28);
         //$dias=[1];
-        $horas = range(9,14)+range(16,20);
+        $horas = range(9,14);//+range(16,20);
         //$horas = array(9);
         $minutos=range(0,59,10);
         //echo $fecha_ini=Carbon::create(date('Y'),1,1,0,0,0,'Europe/Madrid')->timestamp;
@@ -32,10 +32,12 @@ class ConsultasTableSeeder extends Seeder
                         \DB::table('consultas')->insert([
                             'fecha' => $f_ini,
                             'start' => $f_ini->timestamp*1000,
+                            /*
                             'end' => ($f_ini->timestamp+600)*1000,
                             'title' => 'evento'.$f_ini,
                             'body' => 'cuerpo del evento'.$f_ini,
                             'url' => 'www.google.com',
+                            */
                             'created_at' => NOW(),
                             'updated_at' => NOW(),
                         ]);
@@ -47,7 +49,7 @@ class ConsultasTableSeeder extends Seeder
         $clientes = Cliente::all();
         foreach($clientes as $cliente){
             $consulta0 = Consulta::where('asistio',0)->first();
-            $consulta0->id_cliente = $cliente->id;
+            $consulta0->cliente_id = $cliente->id;
             $consulta0->peso = $cliente->peso_inicial;
             $consulta0->comentario = 'consulta inicial';
             $consulta0->asistio = 1;
@@ -56,14 +58,13 @@ class ConsultasTableSeeder extends Seeder
         
         $limit=6;
         $cliente=Cliente::find(1);
-        $cliente_id=$cliente->id;
         $peso=$cliente->peso_inicial;
         $consultas = Consulta::where('asistio',0)->orderby('fecha')->get();
         foreach($consultas as $consulta){
                 if($limit<6*7){
                     $limit++;
                 }else{
-                    $consulta->id_cliente = $cliente_id;
+                    $consulta->cliente_id = $cliente->id;
                     $consulta->variacion = (rand(-30,20)/10);
                     $peso += $consulta->variacion;
                     $consulta->peso = $peso;
@@ -75,14 +76,13 @@ class ConsultasTableSeeder extends Seeder
 
         $limit=5;
         $cliente=Cliente::find(2);
-        $cliente_id=$cliente->id;
         $peso=$cliente->peso_inicial;
         $consultas = Consulta::where('asistio',0)->orderby('fecha')->get();
         foreach($consultas as $consulta){
             if($limit<5*7){
                 $limit++;
             }else{
-                $consulta->id_cliente = $cliente_id;
+                $consulta->cliente_id = $cliente->id;
                 $consulta->variacion = (rand(-30,20)/10);
                 $peso += $consulta->variacion;
                 $consulta->peso = $peso;
@@ -95,7 +95,7 @@ class ConsultasTableSeeder extends Seeder
         $cliente=Cliente::find(7);
         for($i=0;$i<100;$i++){
             $consulta = Consulta::where('asistio',0)->orderby('fecha')->first();
-            $consulta->id_cliente = $cliente->id;
+            $consulta->cliente_id = $cliente->id;
             $consulta->variacion = (rand(-30,20)/10);
             $peso += $consulta->variacion;
             $consulta->peso = $peso;
@@ -106,7 +106,7 @@ class ConsultasTableSeeder extends Seeder
         /*
         foreach($clientes as $cliente){
             $consulta0 = Consulta::where('asistio',0)->orderByDesc('fecha')->first();
-            $consulta0->id_cliente = $cliente->id;
+            $consulta0->cliente_id = $cliente->id;
             $consulta0->peso = $cliente->peso_saludable;
             $consulta0->comentario = 'consulta final';
             $consulta0->asistio = 1;

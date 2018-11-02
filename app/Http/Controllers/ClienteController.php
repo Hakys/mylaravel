@@ -13,13 +13,14 @@ use View;
 class ClienteController extends Controller{
 
     protected $rules = [        
-        'full_name' => 'required|min:2|max:190|string',
-        'peso_inicial' => 'required|numeric',
-        'peso_saludable' => 'required|numeric',
-        'altura' => 'required|numeric',
-        'f_nacimiento' => 'required|date',
-        'telefono' => 'required|numeric',
-        'email' => 'required|email',
+        'full_name' => 'min:2|max:190|string',
+        'peso_inicial' => 'numeric',
+        'peso_saludable' => 'numeric',
+        'altura' => 'numeric',
+        'f_nacimiento' => 'date',
+        'telefono' => 'unique:clientes|numeric',
+        'email' => 'unique:clientes|email',
+        'fecha' => 'date',
     ];
 
     /**
@@ -63,12 +64,17 @@ class ClienteController extends Controller{
             $cliente->anotaciones = $request->anotaciones;
             $cliente->save();
 
-            $consulta0 = Consulta::where('asistio',0)->where('fecha','>',TODAY())->orderby('fecha')->first();
-            $consulta0->id_cliente = $cliente->id;
-            $consulta0->peso = $cliente->peso_inicial;
-            $consulta0->comentario = 'consulta inicial';
-            $consulta0->asistio = 1;
+            $consulta0 = new Consulta([
+                'fecha' => $request->fecha,
+                'start' => $request->fecha->timestamp*1000,
+                'peso' => $request->peso_inicial,
+                'comentario' => 'consulta inicial',
+                'asistio' => 1,
+            ]);
             $consulta0->save();
+            
+            $cliente->consultas()->save($consulta0);
+            
             return response()->json($cliente);
         }
     }
@@ -81,7 +87,7 @@ class ClienteController extends Controller{
      */
     public function show($id) {
         $cliente = Cliente::findOrFail($id);
-        $consultas = Consulta::where('id_cliente', $id)->orderByDesc('fecha')->get();
+        $consultas = Consulta::where('cliente_id', $id)->orderByDesc('fecha')->get();
         return view('clientes.show', 
             ['cliente' => $cliente,'consultas' => $consultas]);
     }
@@ -130,7 +136,14 @@ class ClienteController extends Controller{
      */
     public function destroy($id)
     {
+        /*
+        $consultas = Consulta::where('cliente_id','=',$id)->get();
+        foreach($consultas as $consulta){
+            $consulta ->delete();
+        }
+        */
         $cliente = Cliente::findOrFail($id);
+        $cliente->consultas()->delete();
         $cliente->delete();
 
         return response()->json($cliente);

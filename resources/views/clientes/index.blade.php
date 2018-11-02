@@ -62,35 +62,28 @@
                                     data-placement="left" title="{{$cliente->anotaciones}}"> 
                                     <span class="fa fa-lg fa-info-circle"></span> Ver Notas
                                 </button>
+                                <!--
                                 <button class="show-modal btn btn-success" 
                                     data-id="{{$cliente->id}}" 
-                                    data-full_name="{{$cliente->full_name}}" 
+                                    data-full_name="{{$cliente->full_name}}"                                     
+                                    data-peso_inicial="{{$cliente->peso_inicial}}" 
+                                    data-peso_saludable="{{$cliente->peso_saludable}}" 
                                     data-f_nacimiento="{{$cliente->f_nacimiento}}"
-                                    data-peso="{{$cliente->peso}}" 
-                                    data-telefono="{{$cliente->telefono}}" 
+                                    data-altura="{{$cliente->altura}}"
+                                    data-telefono="{{$cliente->telefono}}"                                 
                                     data-email="{{$cliente->email}}" 
                                     data-anotaciones="{{$cliente->anotaciones}}"
                                     data-toggle="tooltip"
                                     data-placement="top" 
                                     title="Mostrar Ficha">
                                     <span class="glyphicon glyphicon-eye-open"></span></button>
-                                <button class="edit-modal btn btn-info"  
-                                    data-id="{{$cliente->id}}" 
-                                    data-full_name="{{$cliente->full_name}}" 
-                                    data-f_nacimiento="{{$cliente->f_nacimiento}}"
-                                    data-peso="{{$cliente->peso}}" 
-                                    data-telefono="{{$cliente->telefono}}" 
-                                    data-email="{{$cliente->email}}" 
-                                    data-anotaciones="{{$cliente->anotaciones}}"
-                                    data-toggle="tooltip"
-                                    data-placement="top" 
-                                    title="Editar Ficha">
-                                    <span class="glyphicon glyphicon-edit"></span></button>
                                 <button class="delete-modal btn btn-danger" 
                                     data-id="{{$cliente->id}}" 
                                     data-full_name="{{$cliente->full_name}}" 
+                                    data-peso_inicial="{{$cliente->peso_inicial}}" 
+                                    data-peso_saludable="{{$cliente->peso_saludable}}" 
                                     data-f_nacimiento="{{$cliente->f_nacimiento}}"
-                                    data-peso="{{$cliente->peso}}" 
+                                    data-altura="{{$cliente->altura}}" 
                                     data-telefono="{{$cliente->telefono}}" 
                                     data-email="{{$cliente->email}}" 
                                     data-anotaciones="{{$cliente->anotaciones}}"
@@ -98,6 +91,21 @@
                                     data-placement="top" 
                                     title="Eliminar Cliente">
                                     <span class="glyphicon glyphicon-trash"></span></button>
+                                -->
+                                <button class="edit-modal btn btn-info"  
+                                    data-id="{{$cliente->id}}" 
+                                    data-full_name="{{$cliente->full_name}}" 
+                                    data-peso_inicial="{{$cliente->peso_inicial}}" 
+                                    data-peso_saludable="{{$cliente->peso_saludable}}" 
+                                    data-f_nacimiento="{{$cliente->f_nacimiento}}"
+                                    data-altura="{{$cliente->altura}}"
+                                    data-telefono="{{$cliente->telefono}}" 
+                                    data-email="{{$cliente->email}}" 
+                                    data-anotaciones="{{$cliente->anotaciones}}"
+                                    data-toggle="tooltip"
+                                    data-placement="top" 
+                                    title="Editar Ficha">
+                                    <span class="glyphicon glyphicon-edit"></span></button>
                             </td>
                         </tr>                        
                     @endforeach
@@ -106,7 +114,10 @@
     </div><!-- /.panel-body -->
 </div><!-- /.panel panel-default -->
 
-@include('clientes.modal')
+@include('clientes.modal-add')
+@include('clientes.modal-delete')
+@include('clientes.modal-edit')
+@include('clientes.modal-show')
 @include('consultas.modal')
 
 @endsection

@@ -22,18 +22,21 @@ class CreateConsultasTable extends Migration
             $table->string('comentario')->nullable();
             $table->boolean('asistio')->default(false);
             $table->dateTime('fecha')->unique()->nullable();
+            $table->bigInteger('start')->nullable();
             
+            /*
             $table->string('title',150)->nullable();
             $table->string('body')->nullable();
             $table->string('url',150)->nullable();
             $table->string('class',45)->default('event-important');
-            $table->bigInteger('start')->nullable();
+            
             $table->bigInteger('end')->nullable();
             $table->string('inicio_normal',50)->nullable();
             $table->string('final_normal',50)->nullable();
+            */
             
-            $table->unsignedInteger('id_cliente')->unsigned()->nullable();
-            $table->foreign('id_cliente')->references('id')->on('clientes');            
+            $table->unsignedInteger('cliente_id')->unsigned()->nullable();
+            $table->foreign('cliente_id')->references('id')->on('clientes');            
         });
     }
 

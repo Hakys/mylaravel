@@ -208,7 +208,6 @@
     </div><!-- /.panel-body -->
 </div><!-- /.panel panel-default -->
 
-@include('clientes.modal')
 
 @endsection
 
