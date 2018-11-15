@@ -9,6 +9,7 @@ use Response;
 use App\Cliente;
 use App\Consulta;
 use View;
+use Carbon\Carbon;
 
 class ClienteController extends Controller{
 
@@ -18,9 +19,9 @@ class ClienteController extends Controller{
         'peso_saludable' => 'numeric',
         'altura' => 'numeric',
         'f_nacimiento' => 'date',
-        'telefono' => 'unique:clientes|numeric',
-        'email' => 'unique:clientes|email',
-        'fecha' => 'date',
+        'telefono' => 'required|numeric',
+        'email' => 'required|email',
+        //'fecha' => 'date',
     ];
 
     /**
@@ -28,7 +29,8 @@ class ClienteController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function index()
+    {
         $clientes = Cliente::orderByDesc('created_at')->get();
         return view('clientes.index', ['clientes' => $clientes]);
     }
@@ -38,7 +40,8 @@ class ClienteController extends Controller{
      *
      * @return \Illuminate\Http\Response
     */ 
-    public function create() {
+    public function create() 
+    {
         return redirect()->route('clientes.index');
     }
 
@@ -48,7 +51,8 @@ class ClienteController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request) 
+    {
         $validator = Validator::make(Input::all(), $this->rules);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
@@ -63,17 +67,25 @@ class ClienteController extends Controller{
             $cliente->email = $request->email;
             $cliente->anotaciones = $request->anotaciones;
             $cliente->save();
+            //$cliente->consultas()->save($consulta0);
 
-            $consulta0 = new Consulta([
-                'fecha' => $request->fecha,
-                'start' => $request->fecha->timestamp*1000,
-                'peso' => $request->peso_inicial,
-                'comentario' => 'consulta inicial',
-                'asistio' => 1,
-            ]);
+            $consulta0 = new Consulta();
+            $consulta0->fecha = $cliente->created_at;
+            $consulta0->start = $cliente->created_at->timestamp*1000;
+            $consulta0->peso = $request->peso_inicial;
+            $consulta0->comentario = 'consulta inicial';
+            $consulta0->asistio = 1;
+            $consulta0->cliente_id = $cliente->id;
             $consulta0->save();
-            
-            $cliente->consultas()->save($consulta0);
+
+            $consultafinal = new Consulta();
+            $consultafinal->fecha = $cliente->created_at->copy()->addYear();
+            $consultafinal->start = $consultafinal->fecha->timestamp*1000;
+            $consultafinal->peso = $request->peso_saludable;
+            $consultafinal->comentario = 'peso esperado';
+            $consultafinal->asistio = 0;
+            $consultafinal->cliente_id = $cliente->id;
+            $consultafinal->save();
             
             return response()->json($cliente);
         }
@@ -85,11 +97,14 @@ class ClienteController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id) 
+    {
         $cliente = Cliente::findOrFail($id);
-        $consultas = Consulta::where('cliente_id', $id)->orderByDesc('fecha')->get();
-        return view('clientes.show', 
-            ['cliente' => $cliente,'consultas' => $consultas]);
+        //$consultas = Consulta::where('cliente_id', $id)->orderByDesc('fecha')->get();
+        return view('clientes.show', [
+            'cliente' => $cliente,
+            'consultas' => $cliente->consultas()->orderbyDesc('fecha')->get()
+        ]);
     }
 
     /**
@@ -98,7 +113,8 @@ class ClienteController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id){
+    public function edit($id)
+    {
         return redirect()->route('clientes.index');
     }
 
@@ -109,7 +125,8 @@ class ClienteController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $validator = Validator::make(Input::all(), $this->rules);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
@@ -123,7 +140,7 @@ class ClienteController extends Controller{
             $cliente->telefono = $request->telefono;
             $cliente->email = $request->email;
             $cliente->anotaciones = $request->anotaciones;
-            $cliente->save();
+            $cliente->update();
             return response()->json($cliente);
         }
     }
@@ -136,16 +153,9 @@ class ClienteController extends Controller{
      */
     public function destroy($id)
     {
-        /*
-        $consultas = Consulta::where('cliente_id','=',$id)->get();
-        foreach($consultas as $consulta){
-            $consulta ->delete();
-        }
-        */
         $cliente = Cliente::findOrFail($id);
         $cliente->consultas()->delete();
         $cliente->delete();
-
         return response()->json($cliente);
     }
 

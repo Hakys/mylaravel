@@ -116,7 +116,7 @@
 
 
 
-    // add a new cliente
+    // add a new consulta
     $(document).on('click', '.add-ConsultaModal', function() {
         $('.modal-title').text('Anotar Consulta');
         $('#addConsultaModal').modal('show');

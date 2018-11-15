@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <form class="form-horizontal" role="form">   
                     @csrf            
-                    <input type="datetime" id="fecha_add" value="{{ NOW() }}" hidden>     
+                    <!--<input type="datetime" id="fecha_add" value="{{ NOW() }}" hidden>-->     
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="full_name">Nombre Completo:</label>
                         <div class="col-sm-10">

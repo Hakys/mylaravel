@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Cliente;
+use App\Consulta;
+use Carbon\Carbon;
 
 class ClientesTableSeed extends Seeder
 {
@@ -22,7 +25,7 @@ class ClientesTableSeed extends Seeder
             'peso_inicial' => 140,
             'peso_saludable' => 85,
             'altura' => 1.75,
-            'created_at' => '2018-01-01',
+            'created_at' => '2018-01-01 00:00',
             'updated_at' => NOW(),
         ]);  
         \DB::table('clientes')->insert([
@@ -36,7 +39,7 @@ class ClientesTableSeed extends Seeder
             'peso_inicial' => 100,
             'peso_saludable' => 65,
             'altura' => 1.65,
-            'created_at' => '2018-01-01',
+            'created_at' => '2018-01-01 00:10',
             'updated_at' => NOW(),
         ]);   
         \DB::table('clientes')->insert([
@@ -50,7 +53,7 @@ class ClientesTableSeed extends Seeder
             'peso_inicial' => 95,
             'peso_saludable' => 70,
             'altura' => 1.8,
-            'created_at' => '2018-01-01',
+            'created_at' => '2018-01-01 00:20',
             'updated_at' => NOW(),
         ]);   
         \DB::table('clientes')->insert([
@@ -64,7 +67,7 @@ class ClientesTableSeed extends Seeder
             'peso_inicial' => 180,
             'peso_saludable' => 85,
             'altura' => 1.85,
-            'created_at' => '2018-01-01',
+            'created_at' => '2018-01-01 00:30',
             'updated_at' => NOW(),
         ]);   
         \DB::table('clientes')->insert([
@@ -78,7 +81,7 @@ class ClientesTableSeed extends Seeder
             'peso_inicial' => 95,
             'peso_saludable' => 70,
             'altura' => 1.70,
-            'created_at' => '2018-01-01',
+            'created_at' => '2018-01-01 00:40',
             'updated_at' => NOW(),
         ]);  
         \DB::table('clientes')->insert([
@@ -88,11 +91,11 @@ class ClientesTableSeed extends Seeder
             'email' => 'quisexto@diablaroja.es',
             'telefono' => '653187444',
             'activo' => 1,
-            'anotaciones' => 'comentario del cliente antonio  exto',
+            'anotaciones' => 'comentario del cliente antonio  sexto',
             'peso_inicial' => 123,
             'peso_saludable' => 70,
             'altura' => 1.75,
-            'created_at' => '2018-01-01',
+            'created_at' => '2018-01-01 00:50',
             'updated_at' => NOW(),
         ]); 
         \DB::table('clientes')->insert([
@@ -102,12 +105,34 @@ class ClientesTableSeed extends Seeder
             'email' => 'cansino@diablaroja.es',
             'telefono' => '653111444',
             'activo' => 1,
-            'anotaciones' => 'comentario del cliente antonio  exto',
+            'anotaciones' => 'comentario del cliente antonio cansinoexto',
             'peso_inicial' => 123,
             'peso_saludable' => 70,
             'altura' => 1.75,
-            'created_at' => '2018-01-01',
+            'created_at' => '2018-01-01 01:00',
             'updated_at' => NOW(),
-        ]);  
+        ]); 
+        
+        $clientes = Cliente::all();
+        foreach($clientes as $cliente){
+
+            $consulta0 = new Consulta();
+            $consulta0->fecha = $cliente->created_at;
+            $consulta0->start = $cliente->created_at->timestamp*1000;
+            $consulta0->peso = $cliente->peso_inicial;
+            $consulta0->comentario = 'consulta inicial';
+            $consulta0->asistio = 1;
+            $consulta0->cliente_id = $cliente->id;
+            $consulta0->save();
+
+            $consultafinal = new Consulta();
+            $consultafinal->fecha = $cliente->created_at->copy()->addYear();
+            $consultafinal->start = $consultafinal->fecha->timestamp*1000;
+            $consultafinal->peso = $cliente->peso_saludable;
+            $consultafinal->comentario = 'peso esperado';
+            $consultafinal->asistio = 0;
+            $consultafinal->cliente_id = $cliente->id;
+            $consultafinal->save();
+        }
     }
 }

@@ -47,7 +47,7 @@
             url: "{{ URL::route('clientes.store') }}",
             data: {
                 '_token': $('input[name=_token]').val(),
-                'fecha': $('#fecha_add').val(),
+                //'fecha': $('#fecha_add').val(),
                 'full_name': $('#full_name_add').val(),
                 'peso_inicial': $('#peso_inicial_add').val(),
                 'peso_saludable': $('#peso_saludable_add').val(),
@@ -111,8 +111,8 @@
                 }
             }, 
             error :function(error){
-                location.reload();
-                toastr.error('Agregation error! ('+eval(error)+')', 'Error Alert', {timeOut: 5000});
+                //location.reload();
+                toastr.error('Agregation error! ('+eval(error.status)+')', 'Error Alert', {timeOut: 5000});
             },
         });
          
@@ -266,7 +266,7 @@
                 },
                 success: function(data) { 
                     location.reload();                              
-                    toastr.success('Successfully deleted Post!', 'Success Alert', {timeOut: 5000});
+                    toastr.success('Cliente Borrado con Éxito!', 'Success Alert', {timeOut: 5000});
                     //$('.item' + data['id']).remove();
                 }
             });

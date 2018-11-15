@@ -35,7 +35,7 @@ class CreateConsultasTable extends Migration
             $table->string('final_normal',50)->nullable();
             */
             
-            $table->unsignedInteger('cliente_id')->unsigned()->nullable();
+            $table->unsignedInteger('cliente_id')->unsigned();
             $table->foreign('cliente_id')->references('id')->on('clientes');            
         });
     }
